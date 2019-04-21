@@ -1,0 +1,18 @@
+version: '3'
+services:
+  # TODO: grafana
+  # TODO: test exporter
+  server:
+    container_name: prometheus-server
+    command: "--config.file=/etc/prometheus/prometheus.yml"
+    image: prom/prometheus
+    networks:
+      - holloway
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+networks:
+  holloway:
+    external:
+      name: holloway_net
