@@ -1,7 +1,15 @@
 version: '3'
 services:
-  # TODO: grafana
-  # TODO: test exporter
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    depends_on:
+      - server
+    ports:
+      - "127.0.0.1:9091:3000"
+    networks:
+      - holloway
+    restart: always
   server:
     container_name: prometheus-server
     command: "--config.file=/etc/prometheus/prometheus.yml"
@@ -10,8 +18,17 @@ services:
       - holloway
     ports:
       - "127.0.0.1:9090:9090"
+    restart: always
     volumes:
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+  exporter:
+    container_name: node-exporter
+    image: prom/node-exporter
+    networks:
+      - holloway
+    ports:
+      - "127.0.0.1:9100:9100"
+    restart: always
 networks:
   holloway:
     external:
