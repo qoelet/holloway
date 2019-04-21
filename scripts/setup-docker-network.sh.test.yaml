@@ -1,0 +1,6 @@
+tests:
+  - env:
+      PATH: "/run/current-system/sw/bin:~/.nix-profile/bin"
+    steps:
+      - docker network create holloway_net
+    exitcode: 0
